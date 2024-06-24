@@ -11,7 +11,7 @@ interface Waypoints {
     LonMn: number;
   }
 
-  const TableStyle = styled.table`
+const TableStyle = styled.table`
   /* Define table styles here */
   width: 100%;
   border-collapse: collapse;
@@ -39,14 +39,17 @@ const DataTable: React.FC = () => {
       setIsLoading(true); // Set loading state to true
       try {
         const response = await axios.get('http://localhost:5000/api/waypoints');
-        setData(response.data);
+        console.log('API response:', response.data); // Added console log
+        const parsedData = JSON.parse(response.data);
+        console.log('Parsed Data is', parsedData)
+        setData(parsedData);
       } catch (error) {
         console.error('Error fetching data:', error);
       } finally {
         setIsLoading(false); // Set loading state to false regardless of success or error
       }
     };
-
+  
     fetchData();
   }, []);
 
